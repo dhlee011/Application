@@ -4,7 +4,6 @@ pipeline {
     stages {
         stage("Git SCM"){
             steps{
-            
                 git branch: 'main', credentialsId: 'git-app', url: 'https://github.com/dhlee011/application.git'
             }
         }
@@ -21,7 +20,6 @@ pipeline {
         stage('Docker Image Push To ECR') {
             steps{
                 script{
-                    
                     slackSend(message: "Docker Image Push To ECR Start!" , color: 'good', tokenCredentialId: 'slack-key')
                     docker.withRegistry('https://902268280034.dkr.ecr.ap-northeast-2.amazonaws.com', 'ecr:ap-northeast-2:AWS-KEY') {
                     app.push("${env.BUILD_NUMBER}-nginx-prod")
